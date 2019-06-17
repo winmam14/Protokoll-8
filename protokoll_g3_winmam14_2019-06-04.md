@@ -54,9 +54,15 @@ Diese Funktion giebt den gespeicherten Wert am Ende wieder aus.
 Die Funktion **"hex2int"** hat einen Parameter mit dem Datentyp **char** und wird verwendet um char-Werte in ganzzahlige 8-bit-Werte
 umzuwandeln. Bei einem Fehler wird 0xff zurückgegeben, ansonsten wird der ganzzahlige 8-bit-Wert zurückgegeben.  
 
-**Zeile x bis x:**  
+**Zeile 54 bis 142:**   
+Die Funktion **"app_handleModbusRequest"** 
+Nachdem der Buffer gefüllt ist wird die Funktion app_handleModbusRequest aufgerufen die sich jetzt um diese Anfrage kümmert.  
 
-**Zeile x bis x:**  
+Die Funktion schaut ob die Zeichenkette einer validen Modbus Request entspricht.Danach schaut die ob die Adresse mit der Adresse 
+des µC übereinstimmt und wenn diese Adresse übereinstimmt kann der µC eine Response schicken.
+
+**Zeile 144 bis 169:**   
+Die Funktion **"app_handleUartByte"** ist eine Funktion für **Fheler Handling**. Zuerst wird geprüft ob das ertse ankommende Byte ein Startbyte, nähmlich ein ``:`` , ist. Falls dies nicht der Fall ist muss der **"ErrorCount"** hochgezählt werden.
 
 **Zeile x bis x:**  
 
