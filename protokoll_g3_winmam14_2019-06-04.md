@@ -37,10 +37,10 @@ des µC sowie **geringerer Platzbedarf** im Speicher.
 ## 2. Erklärung zum Programm
 
 **Zeilen 1 bis 14:**  
-"Defines"; alle Bibliotheken und Dateien die im Programm verwendet wurden, wurden hier eingebunden!
+**"Defines"**; alle Bibliotheken und Dateien die im Programm verwendet wurden, wurden hier eingebunden!
 
 **Zeile 24 bis 34:**   
-Funktion "app_init", mit dem Rückgabedatentyp **"void"**, benötigt man zur Initialisierung des Programms. 
+Funktion **"app_init"**, mit dem Rückgabedatentyp **"void"**, benötigt man zur Initialisierung des Programms. 
 Der Speicher wird geleert. Im **ADMUX Register** wird der **Multiplexer** (Signalweiche) auf den Temperatursensor gestellt. Die interne
 Referenzspannung von 1,1V wird ebenso gewählt. Weiters wird die Position (links- oder rechtsbündig) vom Messergebniss im **ADLAR Register**
 auf linksbündig festgelegt.  
@@ -62,28 +62,16 @@ Die Funktion schaut ob die Zeichenkette einer validen Modbus Request entspricht.
 des µC übereinstimmt und wenn diese Adresse übereinstimmt kann der µC eine Response schicken.
 
 **Zeile 144 bis 169:**   
-Die Funktion **"app_handleUartByte"** ist eine Funktion für **Fehler Handling**. Zuerst wird geprüft ob das ertse ankommende Byte ein Startbyte, nähmlich ein ``:`` , ist. Falls dies nicht der Fall ist muss der **"ErrorCount"** hochgezählt werden.  
+Die Funktion **"app_handleUartByte"** ist eine Funktion für **Fehler Handling**. Zuerst wird geprüft ob das ertse ankommende Byte ein Startbyte, nähmlich ein ``:`` , ist. Falls dies nicht der Fall ist wird der **"ErrorCount"** hochgezählt.     
 Ebenso wird der **"ErrorCount"** hochgezählt wenn:
 
-1 zu viele Zeichen in den Buffer geschrieben werden.
-2 beim Beenden der Request mit ``\n`` ein Fehler auftritt.
+* zu viele Zeichen in den Buffer geschrieben werden.  
+* beim Beenden der Request mit ``\n`` ein Fehler auftritt.
   
 Sollte nach dem Übertragen der **"ErrorCount"** größer als "0" sein, so wird die Anzahl der Fehler ausgegeben.
 
-**Zeile x bis x:**  
-
-**Zeile x bis x:**  
-
-**Zeile x bis x:**  
-
-**Zeile x bis x:**  
-
-**Zeile x bis x:**  
-
-**Zeile x bis x:**  
-
-
-
+**"Zeile 223 bis 237:"**  
+Die Funktion **"app_task_1ms"** ist eine Funktion die jede millisekunde aufgerufen wird. In der Funktion wird eine LED für zwei Sekunden Eingeschalten, und danach wieder ausgeschalten, falls ein Fehler auftreten sollte.
 
 ---
 ## 3. Das Programm
