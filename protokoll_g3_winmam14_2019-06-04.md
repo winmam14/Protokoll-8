@@ -62,7 +62,13 @@ Die Funktion schaut ob die Zeichenkette einer validen Modbus Request entspricht.
 des µC übereinstimmt und wenn diese Adresse übereinstimmt kann der µC eine Response schicken.
 
 **Zeile 144 bis 169:**   
-Die Funktion **"app_handleUartByte"** ist eine Funktion für **Fheler Handling**. Zuerst wird geprüft ob das ertse ankommende Byte ein Startbyte, nähmlich ein ``:`` , ist. Falls dies nicht der Fall ist muss der **"ErrorCount"** hochgezählt werden.
+Die Funktion **"app_handleUartByte"** ist eine Funktion für **Fehler Handling**. Zuerst wird geprüft ob das ertse ankommende Byte ein Startbyte, nähmlich ein ``:`` , ist. Falls dies nicht der Fall ist muss der **"ErrorCount"** hochgezählt werden.  
+Ebenso wird der **"ErrorCount"** hochgezählt wenn:
+
+1 zu viele Zeichen in den Buffer geschrieben werden.
+2 beim Beenden der Request mit ``\n`` ein Fehler auftritt.
+  
+Sollte nach dem Übertragen der **"ErrorCount"** größer als "0" sein, so wird die Anzahl der Fehler ausgegeben.
 
 **Zeile x bis x:**  
 
