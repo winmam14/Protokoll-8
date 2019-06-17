@@ -39,28 +39,33 @@ des µC sowie **geringerer Platzbedarf** im Speicher.
 **Zeilen 1 bis 14:**  
 **"Defines"**; alle Bibliotheken und Dateien die im Programm verwendet wurden, wurden hier eingebunden!
 
+### App-Init
 **Zeile 24 bis 34:**   
 Funktion **"app_init"**, mit dem Rückgabedatentyp **"void"**, benötigt man zur Initialisierung des Programms. 
 Der Speicher wird geleert. Im **ADMUX Register** wird der **Multiplexer** (Signalweiche) auf den Temperatursensor gestellt. Die interne
 Referenzspannung von 1,1V wird ebenso gewählt. Weiters wird die Position (links- oder rechtsbündig) vom Messergebniss im **ADLAR Register**
 auf linksbündig festgelegt.  
-  
+
+### ErrorCount  
 **Zeilen 39 bis 42:**  
 Die Funktion **"app_inc16BitCount"** wird verwendet um einen ganzzahligen 16-bit Wert einzulesen und in einer Variable zu speichern. 
 Diese VAriable wird überprüft ob sie schon ihre maximale größe von **"0xffff"** angenommen hat, wenn nicht wird sie um "1" erhöht.
 Diese Funktion giebt den gespeicherten Wert am Ende wieder aus.
 
+### HEX2INT
 **Zeile 44 bis 52:**  
 Die Funktion **"hex2int"** hat einen Parameter mit dem Datentyp **char** und wird verwendet um char-Werte in ganzzahlige 8-bit-Werte
 umzuwandeln. Bei einem Fehler wird 0xff zurückgegeben, ansonsten wird der ganzzahlige 8-bit-Wert zurückgegeben.  
-
+  
+### Funktion zur Verarbeitung der eingetroffenen Daten
 **Zeile 54 bis 142:**   
 Die Funktion **"app_handleModbusRequest"** 
 Nachdem der Buffer gefüllt ist wird die Funktion app_handleModbusRequest aufgerufen die sich jetzt um diese Anfrage kümmert.  
 
 Die Funktion schaut ob die Zeichenkette einer validen Modbus Request entspricht.Danach schaut die ob die Adresse mit der Adresse 
 des µC übereinstimmt und wenn diese Adresse übereinstimmt kann der µC eine Response schicken.
-
+  
+  ### Modbus Request Handler
 **Zeile 144 bis 169:**   
 Die Funktion **"app_handleUartByte"** ist eine Funktion für **Fehler Handling**. Zuerst wird geprüft ob das ertse ankommende Byte ein Startbyte, nähmlich ein ``:`` , ist. Falls dies nicht der Fall ist wird der **"ErrorCount"** hochgezählt.     
 Ebenso wird der **"ErrorCount"** hochgezählt wenn:
@@ -70,6 +75,7 @@ Ebenso wird der **"ErrorCount"** hochgezählt wenn:
   
 Sollte nach dem Übertragen der **"ErrorCount"** größer als "0" sein, so wird die Anzahl der Fehler ausgegeben.
 
+### Error-LED
 **"Zeile 223 bis 237:"**  
 Die Funktion **"app_task_1ms"** ist eine Funktion die jede millisekunde aufgerufen wird. In der Funktion wird eine LED für zwei Sekunden Eingeschalten, und danach wieder ausgeschalten, falls ein Fehler auftreten sollte.
 
@@ -323,58 +329,5 @@ Die Funktion **"app_task_1ms"** ist eine Funktion die jede millisekunde aufgeruf
  244 void app_task_32ms (void) {}
  245 void app_task_64ms (void) {}
  246 void app_task_128ms (void) {}
-
-```
-
-### App.h
-
-```c
-App.h
-
-   1 #ifndef APP_H_INCLUDED
-   2 #define APP_H_INCLUDED
-   3 
-   4 // declarations
-   5 
-   6 struct App
-   7 {
-   8   uint8_t flags_u8;
-   9   char modbusBuffer[32];
-  10   uint8_t bufIndex;
-  11   uint16_t errCnt;
-  12   uint16_t mbInputReg01;
-  13 };
-  14 
-  15 extern volatile struct App app;
-  16 
-  17 
-  18 // defines
-  19 
-  20 #define APP_EVENT_0   0x01
-  21 #define APP_EVENT_1   0x02
-  22 #define APP_EVENT_2   0x04
-  23 #define APP_EVENT_3   0x08
-  24 #define APP_EVENT_4   0x10
-  25 #define APP_EVENT_5   0x20
-  26 #define APP_EVENT_6   0x40
-  27 #define APP_EVENT_7   0x80
-  28 
-  29 
-  30 // functions
-  31 
-  32 void app_init (void);
-  33 void app_main (void);
-  34 
-  35 void app_task_1ms   (void);
-  36 void app_task_2ms   (void);
-  37 void app_task_4ms   (void);
-  38 void app_task_8ms   (void);
-  39 void app_task_16ms  (void);
-  40 void app_task_32ms  (void);
-  41 void app_task_64ms  (void);
-  42 void app_task_128ms (void);
-  43 
-  44 #endif // APP_H_INCLUDED
-
 
 ```
